@@ -16,7 +16,7 @@ int  *data2=new int [size+1];
 for (int i = 0; i <size; ++i) {
 data2[i]=data[i];
 }
-data2[size]=val;
+data2[size++]=val;
 std::swap(data2,data);
 delete [] data2;
 }
