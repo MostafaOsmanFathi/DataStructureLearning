@@ -26,6 +26,20 @@ void Vector::push_back(int val) {
         expand_capacity();
     data[size++]=val;
 }
+int Vector::at(int poss){
+    if (poss>=0&&poss<size)return data[poss];
+    else return -1;
+}
+void Vector::insert(int poss,int val){
+    if (size==capacity)
+        expand_capacity();
+    ++size;
+    for (int i = this->size-1; i >=poss ; --i) {
+        std::swap(data[i],data[i-1]);
+    }
+    data[poss]=val;
+
+}
 
 //void Vector::push_back(int val){ ///not efficant Way
 //int  *data2=new int [size+1];

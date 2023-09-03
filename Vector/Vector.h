@@ -15,6 +15,10 @@ public:
     ~Vector();
     void expand_capacity();
     void push_back(int val);
+    int at(int poss);
+    int Size()const{return size;}
+    void insert(int poss,int val);
+
 };
 
 
