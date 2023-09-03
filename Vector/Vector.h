@@ -9,9 +9,11 @@ class Vector {
 private:
     int *data;
     int size;
+    int capacity{0};
 public:
-   Vector(int size);
+   explicit Vector(int size=1);
     ~Vector();
+    void expand_capacity();
     void push_back(int val);
 };
 
