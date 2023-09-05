@@ -4,6 +4,7 @@
 
 #ifndef VECTOR_VECTOR_H
 #define VECTOR_VECTOR_H
+
 #include <iostream>
 class Vector {
 private:
@@ -15,10 +16,13 @@ public:
     ~Vector();
     void expand_capacity();
     void push_back(int val);
-    int at(int poss);
+    int& at(int poss);
     int Size()const{return size;}
     void insert(int poss,int val);
-
+    void right_rotation(int n=1);
+    void left_rotation(int n=1);
+    int pop(int poss);
+    int find(int key);
 };
 
 
