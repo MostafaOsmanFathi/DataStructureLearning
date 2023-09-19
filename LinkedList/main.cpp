@@ -166,6 +166,23 @@ public:
         }
         swap(Head,Tail);
     }
+    void removeMidNode(Node* H){
+        Node* DeleteIt=H->next;
+        H->next=H->next->next;
+        delete DeleteIt;
+    }
+    void move_back(int key){
+        int limit=length+1;
+        Node *tmp=Head;
+        while (tmp->next!= nullptr&&limit--){
+            if (tmp->next->data==key){
+                insert(key);
+                removeMidNode(tmp);
+            }else
+                tmp=tmp->next;
+        }
+
+    }
     void delete_even_poss(){
         bool isEven= false;
         Node* tmp=Head;
@@ -200,6 +217,7 @@ public:
                     Node* tmpNext=tmp->next;
                     tmp->next=new Node(val);
                     tmp->next->next=tmpNext;
+                    ++length;
                     return;
                 }
                 tmp=tmp->next;
@@ -207,13 +225,85 @@ public:
             Tail->next=new Node(val);
             Tail->next->next= nullptr;
             Tail=Tail->next;
+            ++length;
         }
+    }
+    void swapHeadandTail(){
+        Node* prevTail=Head;
+        while (prevTail->next!=Tail){
+            prevTail=prevTail->next;
+        }
+        Node* HeNT=Head->next;
+        Head->next= nullptr;
+        prevTail->next=Head;
+        Tail->next=HeNT;
+        swap(Head,Tail);
+    }
+    void left_rotate(int k){
+        k%=length;
+        while (k--){
+
+        }
+
+    }
+
+    void remove_duplicates(){
+        for (Node* tmp1=Head;tmp1!= nullptr;tmp1=tmp1->next) {
+            for (Node* tmp2=tmp1->next,*tmp2Back=tmp1;tmp2!= nullptr;) {
+                if (tmp1->data==tmp2->data){
+                    if (Tail==tmp2){
+                        Tail=tmp2Back;
+                    }
+                    tmp2Back->next=tmp2->next;
+                    delete tmp2;
+                    tmp2=tmp2Back->next;
+
+                }else{
+                    tmp2=tmp2->next,tmp2Back=tmp2Back->next;
+                }
+            }
+        }
+
+    }
+    void removeLastOccurnce(int key){
+        Node* tmp=Head;
+        Node* tmpPrev= nullptr;
+        Node* Nkey{nullptr},*prevNkey{nullptr};
+        while (tmp!= nullptr){
+            if (tmp->data==key){
+                Nkey=tmp;
+                prevNkey=tmpPrev;
+            }
+            tmpPrev=tmp;
+            tmp=tmp->next;
+        }
+        if (Nkey!= nullptr){
+            if (Nkey==Head)
+                pop_front(),--length;
+            else if (Nkey==Tail)
+                pop_back(),--length;
+            else{
+                prevNkey->next=Nkey->next,--length;
+                delete Nkey;
+            }
+        }
+
+    }
+    int getMaxRec(Node* tmp){
+        if (tmp== nullptr)
+            return 0;
+        return max(tmp->data, getMaxRec(tmp->next));
+    }
+    int getMaxRec(){
+        return getMaxRec(Head);
     }
     void erase_th(int poss){
         if (poss==0){
+            --length;
             this->pop_front();
             return;
         }else if (poss==length){
+            --length;
             this->pop_back();
             return;
         }
@@ -221,6 +311,7 @@ public:
         int cnt{0};
         while (tm!= nullptr){
             if (cnt==poss){
+                --length;
                 Node* tmp=tm->next;
                 delete tm;
                 tmback->next=tmp;
@@ -255,11 +346,22 @@ int main() {
 //    cout<<mo.Get_length()<<endl;
 //    mo.print();
     linkedList sos;
-    sos.insert_sort(5);
-    sos.insert_sort(4);
-    sos.insert_sort(1);
-    sos.insert_sort(0);
     sos.insert_sort(2);
+    sos.insert_sort(3);
+    sos.insert_sort(3);
+    sos.insert_sort(5);
+    sos.insert_sort(5);
+    sos.insert_sort(3);
+    sos.insert_sort(1);
+    sos.insert_sort(1);
+    sos.insert_sort(2);
+    sos.insert_sort(6);
+//    sos.swapHeadandTail();
+//    sos.remove_duplicates();
+//    sos.removeLastOccurnce(2);
+    cout<<sos.Get_length()<<endl;
+    sos.move_back(3);
+    cout<<sos.getMaxRec()<<endl;
     sos.print();
 
     return 0;
