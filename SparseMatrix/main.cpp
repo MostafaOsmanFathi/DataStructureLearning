@@ -57,6 +57,9 @@ public:
         if (Head== nullptr||Head->poss>poss){
             insertFront(new Node(data,poss));
             return;
+        }else if (Tail->poss==poss){
+            Tail->data=data;
+            return;
         }
         for (Node* tmp=Head;tmp->next!= nullptr;tmp=tmp->next){
             if (tmp->poss==poss){
@@ -67,6 +70,7 @@ public:
                 return;
             }
         }
+
         insertBack(new Node(data,poss));
     }
     void printNonZero(){
@@ -83,7 +87,7 @@ public:
             cout<<tmp->data<<" ";
             lastPrint=tmp->poss+1;
         }
-        while (lastPrint<length)
+        while (lastPrint<=length)
             cout<<0<<" ",++lastPrint;
 
         cout<<endl;
@@ -180,7 +184,7 @@ public:
     SparseMatrix(int lenght=0):lengthOfNodes{lenght}{}
 
     void set_value(int possX,int possY=-1,int val=-1){
-        lengthOfNodes= max(lengthOfNodes,possX+1);
+        lengthOfNodes= max(lengthOfNodes,max(possX+1,possY+1));
 
         if (Head == nullptr){
             (possY==-1)?insertFront(new Node(possX)):insertFront(new Node(possX,possY,val));
@@ -209,15 +213,24 @@ public:
         Node* tmp=Head;
         int lastPrint{0};
         while (tmp!= nullptr){
-            while (lastPrint<tmp->possX)
-                cout<<0<<"\n",++lastPrint;
+            tmp->data.length=lengthOfNodes;
+            while (lastPrint<tmp->possX) {
+                for (int i = 0; i <= lengthOfNodes; ++i) {cout<<0<<" ";}
+                cout<<endl;
+                ++lastPrint;
+            }
             tmp->data.print();
             lastPrint=tmp->possX+1;
             tmp=tmp->next;
             cout<<flush;
         }
-        while (lastPrint<lengthOfNodes)
-            cout<<0<<" ",++lastPrint;
+        while (lastPrint<lengthOfNodes) {
+            for (int i = 0; i <= lengthOfNodes; ++i) {cout<<0<<" ";}
+            cout<<endl;
+             ++lastPrint;
+        }
+
+        cout<<endl;
     }
     void printNoneZero(){
         Node* tmp=Head;
@@ -246,17 +259,17 @@ public:
 };
 int main() {
     SparseMatrix most;
-    most.set_value(0,0,100);
-    most.set_value(0,10,110);
-    most.set_value(0,10,1200);
-    most.set_value(5,10,1200);
-    most.set_value(4,10,100200);
+    most.set_value(0,0,1);
+    most.set_value(0,10,2);
+    most.set_value(0,10,3);
+    most.set_value(5,10,4);
+    most.set_value(4,10,5);
     most.print();
-    cout<<"============\n";
-    most[0][0]=155;
-    most.print();
-    cout<<"============\n";
-    most[15][10]=159;
-    most.print();
+//    cout<<"============\n";
+//    most[0][0]=155;
+//    most.print();
+//    cout<<"============\n";
+//    most[15][10]=159;
+//    most.print();
     return 0;
 }

@@ -57,6 +57,9 @@ public:
         if (Head== nullptr||Head->poss>poss){
             insertFront(new Node(data,poss));
             return;
+        }else if (Tail->poss==poss){
+            Tail->data=data;
+            return;
         }
             for (Node* tmp=Head;tmp->next!= nullptr;tmp=tmp->next){
                 if (tmp->poss==poss){
