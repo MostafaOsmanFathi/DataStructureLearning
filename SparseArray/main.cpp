@@ -85,7 +85,22 @@ public:
         }
         cout<<endl;
     }
-
+    void addSparseArray(const SparseArray& rhs){
+        length= max(length,rhs.length);
+        Node* tmp1=Head;
+        for (Node* tmp=rhs.Head;tmp!= nullptr;tmp=tmp->next){
+            while ((tmp1->next!= nullptr)&&tmp1->poss<tmp->poss){tmp1=tmp1->next;}
+            if ((tmp1!= nullptr)&&tmp1->poss==tmp->poss){
+                tmp1->data+=tmp->data;
+            }else{
+                insertAfterNode(tmp1,new Node(tmp->data,tmp->poss));
+            }
+        }
+    }
+    SparseArray& operator+=(const SparseArray& rhs){
+        addSparseArray(rhs);
+        return *this;
+    }
 };
 
 
@@ -95,7 +110,21 @@ int main() {
     most.set_value(5,3);
     most.set_value(10,10);
     most.set_value(2,2);
+    SparseArray moca{21};
+
+    moca.set_value(100,1);
+    moca.set_value(200,2);
+    moca.set_value(300,3);
+    moca.set_value(1000,10);
+    moca.set_value(2000,20);
+
+    most.addSparseArray(moca);
     most.printNonZero();
     most.print();
+
+    most+=most;
+    most.printNonZero();
+    most.print();
+
     return 0;
 }
