@@ -18,6 +18,7 @@ public:
             cout<<tmp->data<<" ";
             tmp=tmp->next;
         }
+        cout<<endl;
     }
     void insert(int val){
         if (length==0){
@@ -321,7 +322,19 @@ public:
         }
 
     }
+    void arrangeOddEvenPoss(){
+        insert(Head->data);
+        pop_front();
+        int times=(length/2)-1;
+        for (Node* tmp=Head;tmp!= nullptr&&times--;tmp=tmp->next){
+            insert(tmp->next->data);
+            removeMidNode(tmp);
+        }
+
+    }
+    linkedList()=default;
     linkedList& operator=(const linkedList& )=delete;
+    linkedList(const linkedList& )=delete;
 };
 
 
@@ -363,6 +376,14 @@ int main() {
     sos.move_back(3);
     cout<<sos.getMaxRec()<<endl;
     sos.print();
+
+    linkedList mostafa;
+    for (int i = 1; i <=10 ; ++i) {
+        mostafa.insert(i);
+    }
+    mostafa.print();
+    mostafa.arrangeOddEvenPoss();
+    mostafa.print();
 
     return 0;
 }

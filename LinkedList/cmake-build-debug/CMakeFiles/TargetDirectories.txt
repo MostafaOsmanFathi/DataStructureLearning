@@ -1,3 +1,3 @@
-/home/mostafa/DataStructureLearning/LinkedList/cmake-build-debug/CMakeFiles/LinkedList.dir
-/home/mostafa/DataStructureLearning/LinkedList/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/mostafa/DataStructureLearning/LinkedList/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/mo528/CLionProjects/DataStructureLearning/LinkedList/cmake-build-debug/CMakeFiles/LinkedList.dir
+C:/Users/mo528/CLionProjects/DataStructureLearning/LinkedList/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/mo528/CLionProjects/DataStructureLearning/LinkedList/cmake-build-debug/CMakeFiles/rebuild_cache.dir
