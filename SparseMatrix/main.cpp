@@ -41,32 +41,31 @@ private:
             tmp->next=nd;
         }
     }
+public:
+    int length{0};
+    SparseArray(int lenght=0):length(lenght){}
+
     Node* find_poss(int poss){
         for (Node* tmp=Head;tmp!= nullptr;tmp=tmp->next){
             if (tmp->poss==poss){ return tmp;}
         }
         return nullptr;
     }
-public:
-    int length{0};
-    SparseArray(int lenght):length(lenght){}
-
-
     void set_value(int data,int poss){
         length= max(length,poss+1);
         if (Head== nullptr||Head->poss>poss){
             insertFront(new Node(data,poss));
             return;
         }
-            for (Node* tmp=Head;tmp->next!= nullptr;tmp=tmp->next){
-                if (tmp->poss==poss){
-                    tmp->data=data;
-                    return;
-                }else if (tmp->poss<poss&&tmp->next->poss>poss){
-                    insertAfterNode(tmp,new Node(poss,data));
-                    return;
-                }
+        for (Node* tmp=Head;tmp->next!= nullptr;tmp=tmp->next){
+            if (tmp->poss==poss){
+                tmp->data=data;
+                return;
+            }else if (tmp->poss<poss&&tmp->next->poss>poss){
+                insertAfterNode(tmp,new Node(poss,data));
+                return;
             }
+        }
         insertBack(new Node(data,poss));
     }
     void printNonZero(){
@@ -102,46 +101,21 @@ public:
         addSparseArray(rhs);
         return *this;
     }
-    int& operator[](int poss){
-        if (poss>=length)
-            length=poss+1;
-
-        Node* tmp= find_poss(poss);
-        if (tmp== nullptr){
-            set_value(0,poss);
-            tmp= find_poss(poss);
-        }
-            return tmp->data;
-    }
 };
+class SparseMatrix{
+private:
+    struct Node{
+        Node* next= nullptr;
+        Node* prev= nullptr;
+        SparseArray data{};
+    };
+public:
 
 
+
+};
 int main() {
-    SparseArray most{10};
-    most.set_value(1,1);
-    most.set_value(5,3);
-    most.set_value(10,10);
-    most.set_value(2,2);
-    SparseArray moca{21};
 
-    moca.set_value(100,1);
-    moca.set_value(200,2);
-    moca.set_value(300,3);
-    moca.set_value(1000,10);
-    moca.set_value(2000,20);
 
-    most.addSparseArray(moca);
-    most.printNonZero();
-    most.print();
-
-    most+=most;
-    most.printNonZero();
-    most.print();
-
-    cout<<most[20]<<endl;
-    most[20]=3000;
-    cout<<most[20]<<endl;
-
-    cout<<(most[500000]=100);
     return 0;
 }
