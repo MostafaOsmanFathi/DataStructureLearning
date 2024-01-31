@@ -53,6 +53,8 @@ int main() {
     most.enqueue(10);
     most.enqueue(20);
     most.enqueue(30);
+    most.deque();
+    most.deque();
     while (!most.isEmpty()) {
         cout << most.Front();
         most.deque();
