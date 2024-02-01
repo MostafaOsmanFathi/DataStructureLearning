@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include <cassert>
 #include <vector>
 
@@ -37,6 +38,42 @@ private:
         cout << root->data << " ";
     }
 
+    int TreeMax(Node *root) {
+        if (root == nullptr)return INT_MIN;
+        return max(root->data, max(TreeMax(root->left), TreeMax(root->right)));
+    }
+
+    int TreeMin(Node *root) {
+        if (root == nullptr)return INT_MAX;
+        return min(root->data, max(TreeMin(root->left), TreeMin(root->right)));
+    }
+
+    int TreeHeight(Node *root) {
+        if (root == nullptr)return 0;
+
+        int rightPath = 1 + TreeHeight(root->right);
+        int leftPath = 1 + TreeHeight(root->left);
+        return max(rightPath, leftPath);
+    }
+
+    int CountAllNodes(Node *Root) {
+        if (Root == nullptr)return 0;
+        return 1 + CountAllNodes(Root->left) + CountAllNodes(Root->right);
+    }
+
+    int CountLeafNode(Node *root) {
+        if (root == nullptr)return 0;
+        else if (root->left == nullptr && root->right == nullptr)return 1;
+        int tmp = CountLeafNode(root->left) + CountLeafNode(root->right);
+        return tmp;
+    }
+
+    bool IsExist(Node *root, int val) {
+        if (root == nullptr)return false;
+        else if (root->data == val)return true;
+        return IsExist(root->left, val) || IsExist(root->right, val);
+    }
+
 public:
 
     void add(vector<int> values, vector<char> direction) {
@@ -64,6 +101,22 @@ public:
         }
     }
 
+    bool isPerfectTree() {
+        return countAllNodes() == (2 << treeHeight()) - 1;
+    }
+
+    inline int treeHeight() {
+        return TreeHeight(Root) - 1;
+    }
+
+    inline int treeMax() {
+        return TreeMax(Root);
+    }
+
+    inline int treeMin() {
+        return TreeMin(Root);
+    }
+
     inline void printPastOrder() {
         PrintPastOrder(Root);
         cout << endl;
@@ -79,6 +132,17 @@ public:
         cout << endl;
     }
 
+    inline int countAllNodes() {
+        return CountAllNodes(Root);
+    }
+
+    inline int countLeafNode() {
+        return CountLeafNode(Root);
+    }
+
+    inline bool isExist(int val) {
+        return IsExist(Root, val);
+    }
 };
 
 int main() {
@@ -92,6 +156,41 @@ int main() {
     tree.printPreOrder();
     tree.printInOrder();
     tree.printPastOrder();
+    cout << tree.treeMax() << endl;
+    cout << tree.treeMin() << endl;
+    cout << tree.treeHeight() << endl;
+    cout << tree.countAllNodes() << endl;
+    cout << tree.countLeafNode() << endl;
+    cout << boolalpha << tree.isExist(7) << endl;
+    cout << boolalpha << tree.isExist(120) << endl;
+    cout << boolalpha << tree.isPerfectTree() << endl;
+
+    cout << "==================\n";
+    BinaryTree most;
+    most.add({1}, {'R'});
+    most.add({3}, {'L'});
+    most.add({13, 8}, {'R', 'R'});
+    most.add({13, 7}, {'R', 'L'});
+    most.printPreOrder();
+    cout << most.treeMax() << endl;
+    cout << most.treeMin() << endl;
+    cout << most.treeHeight() << endl;
+    cout << most.countAllNodes() << endl;
+    cout << most.countLeafNode() << endl;
+    cout << boolalpha << most.isExist(13) << endl;
+    cout << boolalpha << most.isExist(120) << endl;
+    cout << boolalpha << most.isPerfectTree() << endl;
+
+
+    cout << "==================\n";
+    BinaryTree PerfectTree;
+    PerfectTree.add({2}, {'L'});
+    PerfectTree.add({3, 5}, {'L', 'L'});
+    PerfectTree.add({3, 6}, {'L', 'R'});
+    PerfectTree.add({13, 8}, {'R', 'R'});
+    PerfectTree.add({13, 7}, {'R', 'L'});
+    PerfectTree.printPreOrder();
+    cout << boolalpha << PerfectTree.isPerfectTree() << endl;
 
     return 0;
 }
