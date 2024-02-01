@@ -1,0 +1,21 @@
+# ninja log v5
+1	940	7285033286445607	CMakeFiles/BinaryTree.dir/main.cpp.obj	9bf052a0a0d3b2da
+944	1122	7285033288241577	BinaryTree.exe	2f593af2e3e59e37
+5	1033	7285033387850542	CMakeFiles/BinaryTree.dir/main.cpp.obj	9bf052a0a0d3b2da
+1033	1182	7285033389267400	BinaryTree.exe	2f593af2e3e59e37
+5	854	7285034033114395	CMakeFiles/BinaryTree.dir/main.cpp.obj	9bf052a0a0d3b2da
+855	1000	7285034034511315	BinaryTree.exe	2f593af2e3e59e37
+5	1290	7285034131722450	CMakeFiles/BinaryTree.dir/main.cpp.obj	9bf052a0a0d3b2da
+1291	1443	7285034133207083	BinaryTree.exe	2f593af2e3e59e37
+4	1052	7285034243146553	CMakeFiles/BinaryTree.dir/main.cpp.obj	9bf052a0a0d3b2da
+1053	1230	7285034244845529	BinaryTree.exe	2f593af2e3e59e37
+5	1100	7285034646196724	CMakeFiles/BinaryTree.dir/main.cpp.obj	9bf052a0a0d3b2da
+1101	1277	7285034647879013	BinaryTree.exe	2f593af2e3e59e37
+5	921	7285034980038476	CMakeFiles/BinaryTree.dir/main.cpp.obj	9bf052a0a0d3b2da
+921	1091	7285034981681836	BinaryTree.exe	2f593af2e3e59e37
+6	1225	7285045834297124	CMakeFiles/BinaryTree.dir/main.cpp.obj	9bf052a0a0d3b2da
+1226	1363	7285045835657999	BinaryTree.exe	2f593af2e3e59e37
+4	1014	7285045936639995	CMakeFiles/BinaryTree.dir/main.cpp.obj	9bf052a0a0d3b2da
+1015	1202	7285045938517459	BinaryTree.exe	2f593af2e3e59e37
+4	685	7285047165903111	CMakeFiles/BinaryTree.dir/main.cpp.obj	9bf052a0a0d3b2da
+686	801	7285047167010738	BinaryTree.exe	2f593af2e3e59e37
