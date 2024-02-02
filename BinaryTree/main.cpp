@@ -2,6 +2,7 @@
 #include <cmath>
 #include <cassert>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -74,6 +75,13 @@ private:
         return IsExist(root->left, val) || IsExist(root->right, val);
     }
 
+    void ClearTree(Node *root) {
+        if (root == nullptr)return;
+        ClearTree(root->left);
+        ClearTree(root->right);
+        delete root;
+    }
+
 public:
 
     void add(vector<int> values, vector<char> direction) {
@@ -140,8 +148,33 @@ public:
         return CountLeafNode(Root);
     }
 
+    void levelOrderTraversal() {///BFS
+        queue<Node *> qu;
+        qu.push(Root);
+        while (!qu.empty()) {
+            cout << qu.front()->data << " ";
+            Node *Cur = qu.front();
+            qu.pop();
+            if (Cur->left != nullptr)qu.push(Cur->left);
+            if (Cur->right != nullptr)qu.push(Cur->right);
+        }
+    }
+
     inline bool isExist(int val) {
         return IsExist(Root, val);
+    }
+
+    inline void clearTree() {
+        ClearTree(Root);
+        Root = nullptr;
+    }
+
+    bool isEmpty() {
+        return Root == nullptr;
+    }
+
+    ~BinaryTree() {
+        ClearTree(Root);
     }
 };
 
@@ -192,6 +225,17 @@ int main() {
     PerfectTree.printPreOrder();
     cout << boolalpha << PerfectTree.isPerfectTree() << endl;
 
+
+    cout << "==================\n";
+    BinaryTree Tree;
+    Tree.add({2}, {'L'});
+    Tree.add({3, 5}, {'L', 'L'});
+    Tree.add({3, 6}, {'L', 'R'});
+    Tree.add({13, 8}, {'R', 'R'});
+    Tree.add({13, 7}, {'R', 'L'});
+    Tree.printPastOrder();
+//    Tree.clearTree();
+    Tree.levelOrderTraversal();///DFS
     return 0;
 }
 
