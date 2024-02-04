@@ -2,7 +2,9 @@
 #include <cmath>
 #include <cassert>
 #include <vector>
+#include <stack>
 #include <queue>
+#include <algorithm>
 
 using namespace std;
 
@@ -81,9 +83,63 @@ private:
         ClearTree(root->right);
         delete root;
     }
+    void generationTree(deque<int>&preorder,deque<int>&inorder,Node*& root,int start=0,int end=-1){
+        if (end==-1)end=inorder.size()-1;
+        if (preorder.empty())return;
+        for (int i = start; i <=end; ++i) {
+            if (inorder.at(i)==root->data){
+                if (start<i){
+                    root->left=new Node(preorder.front());
+                    preorder.pop_front();
+                    generationTree(preorder,inorder,root->left,start,i-1);
+                }
+                if (i<end){
+                    root->right=new Node(preorder.front());
+                    preorder.pop_front();
+                    generationTree(preorder,inorder,root->right,i+1,end);
+                }
+                break;
+            }
+        }
+
+    }
 
 public:
+    void generationTreeQueue(Node* root,queue<pair<int,bool>>&qu){
+        if (qu.empty())return;
 
+            root->left=new Node(qu.front().first);
+            if (!qu.front().second) {
+                qu.pop();
+                generationTreeQueue(root->left, qu);
+            }else
+                qu.pop();
+
+
+            if (!qu.empty()){
+                root->right=new Node(qu.front().first);
+                if (!qu.front().second) {
+                    qu.pop();
+                    generationTreeQueue(root->right, qu);
+                }else
+                    qu.pop();
+            }
+
+    }
+    BinaryTree(){}
+
+    BinaryTree(deque<int>preorder,deque<int>inorder){
+        Root=new Node(preorder.front());
+        preorder.pop_front();
+        generationTree(preorder,inorder,Root);
+    }
+    ///                   value  isLeaf
+    BinaryTree(queue<pair<int  , bool>>qu){
+
+        Root=new Node(qu.front().first);
+        qu.pop();
+        generationTreeQueue(Root,qu);
+    }
     void add(vector<int> values, vector<char> direction) {
         assert(values.size() == direction.size());
         Node *Cur = Root;
@@ -158,6 +214,40 @@ public:
             if (Cur->left != nullptr)qu.push(Cur->left);
             if (Cur->right != nullptr)qu.push(Cur->right);
         }
+        cout<<endl;
+    }
+    void levelOrderSpiral(){
+        queue<Node *> qu;
+        stack<int> st;
+        qu.push(Root);
+        cout<<Root->data<<" ";
+        bool isRev{false};
+        while (!qu.empty()) {
+            int sz=qu.size();
+            while (sz--){
+                if (isRev&&Root!=qu.front())
+                    cout << qu.front()->data << " "<<flush;
+                Node *Cur = qu.front();
+                qu.pop();
+                if (Cur->left != nullptr) {
+                    qu.push(Cur->left);
+                    if (isRev){
+                        st.push(Cur->left->data);
+                    }
+                }
+                if (Cur->right != nullptr) {
+                    qu.push(Cur->right);
+                    if (isRev){
+                        st.push(Cur->right->data);
+                    }
+                }
+            }
+            while (!st.empty())
+                cout<<st.top()<<" ",st.pop();
+
+            isRev=!isRev;
+        }
+        cout<<endl;
     }
 
     inline bool isExist(int val) {
@@ -179,6 +269,20 @@ public:
 };
 
 int main() {
+    ///tree generation using preorder and isLeaf bool
+    queue<pair<int,bool>>qu;
+    qu.push({1,0});
+    qu.push({2,1});
+    qu.push({3,1});
+    BinaryTree testGenerationQu(qu);
+    testGenerationQu.printPreOrder();
+
+    cout << "==================\n";
+    ///tree generation using preorder and inorder
+    BinaryTree testGeneration({1,2,4,7,8,5,9,3,6,10},{7,4,8,2,5,9,1,3,10,6});
+    testGeneration.printPreOrder();
+    testGeneration.levelOrderTraversal();
+    cout << "==================\n";
     BinaryTree tree;
     tree.add({1}, {'L'});
     tree.add({2, 4, 7}, {'L', 'L', 'L'});
@@ -236,6 +340,20 @@ int main() {
     Tree.printPastOrder();
 //    Tree.clearTree();
     Tree.levelOrderTraversal();///DFS
+    cout << "==================\n";
+
+    BinaryTree TestTree;
+    TestTree.add({1,2,4,8},{'L','L','L','L'});
+    TestTree.add({2,5,11},{'L','R','R'});
+    TestTree.add({2,5,10},{'L','R','L'});
+    TestTree.add({2,4,9},{'L','L','R'});
+    TestTree.add({3,7,15},{'R','R','R'});
+    TestTree.add({3,7,14},{'R','R','L'});
+    TestTree.add({3,6,12},{'R','L','L'});
+    TestTree.add({3,6,15},{'R','L','R'});
+    TestTree.levelOrderTraversal();
+    TestTree.levelOrderSpiral();
+
     return 0;
 }
 
