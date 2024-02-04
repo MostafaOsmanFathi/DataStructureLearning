@@ -103,29 +103,40 @@ private:
         }
 
     }
-
-public:
     void generationTreeQueue(Node* root,queue<pair<int,bool>>&qu){
         if (qu.empty())return;
 
-            root->left=new Node(qu.front().first);
+        root->left=new Node(qu.front().first);
+        if (!qu.front().second) {
+            qu.pop();
+            generationTreeQueue(root->left, qu);
+        }else
+            qu.pop();
+
+
+        if (!qu.empty()){
+            root->right=new Node(qu.front().first);
             if (!qu.front().second) {
                 qu.pop();
-                generationTreeQueue(root->left, qu);
+                generationTreeQueue(root->right, qu);
             }else
                 qu.pop();
-
-
-            if (!qu.empty()){
-                root->right=new Node(qu.front().first);
-                if (!qu.front().second) {
-                    qu.pop();
-                    generationTreeQueue(root->right, qu);
-                }else
-                    qu.pop();
-            }
+        }
 
     }
+    void TreeSerialization(Node* root,string& res){
+        if (root== nullptr){
+            res+="-1 ";
+            return;
+        }else{
+            res+= to_string(root->data)+' ';
+        }
+            TreeSerialization(root->left,res);
+            TreeSerialization(root->right,res);
+    }
+
+public:
+
     BinaryTree(){}
 
     BinaryTree(deque<int>preorder,deque<int>inorder){
@@ -249,7 +260,11 @@ public:
         }
         cout<<endl;
     }
-
+    inline string treeSerialization(){
+        string res;
+        TreeSerialization(Root,res);
+     return res;
+    }
     inline bool isExist(int val) {
         return IsExist(Root, val);
     }
@@ -276,7 +291,8 @@ int main() {
     qu.push({3,1});
     BinaryTree testGenerationQu(qu);
     testGenerationQu.printPreOrder();
-
+    cout << "==================\n";
+    cout<<testGenerationQu.treeSerialization()<<endl;
     cout << "==================\n";
     ///tree generation using preorder and inorder
     BinaryTree testGeneration({1,2,4,7,8,5,9,3,6,10},{7,4,8,2,5,9,1,3,10,6});
