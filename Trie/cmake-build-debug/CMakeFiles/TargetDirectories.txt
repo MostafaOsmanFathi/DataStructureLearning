@@ -1,0 +1,3 @@
+/home/mostafa/CLionProjects/DataStructureLearning/Trie/cmake-build-debug/CMakeFiles/Trie.dir
+/home/mostafa/CLionProjects/DataStructureLearning/Trie/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/mostafa/CLionProjects/DataStructureLearning/Trie/cmake-build-debug/CMakeFiles/rebuild_cache.dir
