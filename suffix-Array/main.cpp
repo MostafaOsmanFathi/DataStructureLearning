@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <vector>
 
-using std::string, std::vector, std::cout, std::min, std::sort, std::endl;
+using std::string, std::vector, std::cout, std::sort, std::endl;
 
 class SuffixArray {
     char *str{};
@@ -18,8 +18,13 @@ class SuffixArray {
         bool operator()(const int &IdxA, const int &IdxB) {
             if (Group[IdxA] != Group[IdxB])
                 return Group[IdxA] < Group[IdxB];
-            else
-                return Group[min(IdxA + h, Maxlength)] < Group[min(IdxB + h, Maxlength)];
+            else {
+                if (IdxA + h < Maxlength and IdxB + h < Maxlength) {
+                    return Group[IdxA + h] < Group[IdxB + h];
+                } else {
+                    return IdxA > IdxB;
+                }
+            }
         }
 
     private:
@@ -61,6 +66,25 @@ public:
         return ans;
     }
 
+    string getLongestCommonPrefix() {
+        string ans;
+        for (int i = 1; i < length; ++i) {
+            string strTmp;
+            for (int j = suffixIDX[i], j2 = suffixIDX[i - 1]; j < length and j2 < length; ++j2, ++j) {
+                if (str[j] != str[j2]) {
+                    break;
+                } else
+                    strTmp.push_back(str[j]);
+            }
+            if (strTmp.size() > ans.size()) {
+                ans = strTmp;
+            }
+            strTmp.clear();
+        }
+
+        return ans;
+    }
+
     SuffixArray(string str) {
         SuffixArray(str.c_str());
     }
@@ -89,12 +113,16 @@ int main() {
     for (const auto &x: suff.getSortedSuffix()) {
         cout << x << ":  " << GenerateSuffix(str, x) << endl;
     }
+    cout << "Longest common Prefix:" << suff.getLongestCommonPrefix() << endl;
+
     cout << "===================" << endl;
     str = "banana";
     cout << str << endl;
-    for (const auto &x: SuffixArray(str).getSortedSuffix()) {
+    SuffixArray suff2(str);
+    for (const auto &x: suff2.getSortedSuffix()) {
         cout << x << ":  " << GenerateSuffix(str, x) << endl;
     }
+    cout << "Longest common Prefix:" << suff2.getLongestCommonPrefix();
 
     return 0;
 }
